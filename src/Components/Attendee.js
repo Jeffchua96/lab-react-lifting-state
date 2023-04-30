@@ -1,3 +1,5 @@
 export default function Attendee() {
-  return;
+  return(
+    <></>
+  )
 }

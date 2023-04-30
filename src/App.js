@@ -1,11 +1,18 @@
 import { useState } from "react";
 import eventsData from "./data";
 import { v1 as generateUniqueID } from "uuid";
-// import Attendees from "./Attendees";
+// import Attendees from "./Components/Attendees";
 // import Event from "./Components/Event";
 // import Footer from "./Components/Footer";
 // import Header from "./Components/Header";
-// import NewEventForm from "./Components/NewEventForm";
+import NewEventForm from "./Components/NewEventForm";
+// import showAttendees from "./showAttendees"
+import React from 'react';
+import './App.css';
+import { interfaces } from "mocha";
+
+
+interface Props{}
 
 function App() {
   const [events, setEvents] = useState(eventsData);
@@ -24,19 +31,8 @@ function App() {
     people: [],
   });
 
-  function addEvent() {
-    const createEvent = {
-      id: generateUniqueID(),
-      eventType: selectOption,
-      name: newEvent.name,
-      organizer: newEvent.organizer,
-      eventImage: newEvent.eventImage || "https://loremflickr.com/640/480/",
-      date: newEvent.date,
-      people: [],
-    };
-    handleAddEvent(createEvent);
-  }
-
+ 
+  
   function handleSelectChange(e) {
     setSelectOption(e.target.value);
   }
@@ -54,7 +50,7 @@ function App() {
     });
   }
 
-  function resetEventForm() {
+  function resetEventForm(e) {
     setNewEvent({
       id: "",
       eventType: "",
@@ -87,9 +83,10 @@ function App() {
     eventArray[eventIndex] = event;
     setEvents(eventArray);
   }
-
-  return (
-    <div className="App">
+  function listGroup() {
+    let items = { header, main, }
+    return (
+      <div className="App">
       <>
         <header>
           <h1 className="color-change-5x">RSVP App</h1>
@@ -137,73 +134,23 @@ function App() {
             </form>
           </>
         </div>
-        <div className="events">
-          <ul>
+        <div className ="events">
+           <ul>
             {events.map((event) => {
               const { people: attendees } = event;
-
+              
               return (
-                <>
-                  <li key={event.id}>
-                    <img src={event.eventImage} alt={event.name} />
-                    <h5>
-                      {event.name} {event.eventType}
-                    </h5>
-                    <br />
-                    <span>Organized by: {event.organizer} </span>
-                    <br />
-                    <>
-                      <button onClick={toggleEventAttendees}>
-                        {!showAttendees ? "Show Attendees" : "Hide Attendees"}
-                      </button>
-
-                      {showAttendees ? (
-                        <div className="attendees">
-                          {attendees.map((attendee, index) => (
-                            <>
-                              <div key={attendee.id} className="attendee">
-                                <p>
-                                  <img
-                                    src={attendee.avatar}
-                                    alt={attendee.firstName}
-                                  />
-                                  {"   "}
-                                  <span>
-                                    {" "}
-                                    {attendee.firstName} {attendee.lastName}{" "}
-                                  </span>
-                                </p>
-                                <p>
-                                  <button
-                                    className="clickable"
-                                    onClick={() =>
-                                      updateEventAttendance(
-                                        event.id,
-                                        attendee.id
-                                      )
-                                    }
-                                  >
-                                    Attending:
-                                  </button>
-                                  <span>
-                                    {attendee.attendance ? "✅" : "❌"}
-                                  </span>
-                                </p>
-
-                                <p>
-                                  <span>Note:</span> {attendee.note}
-                                </p>
-                              </div>
-                            </>
-                          ))}
-                        </div>
-                      ) : null}
-                    </>
-                  </li>
-                </>
+               
+               event = {event} 
+               attendees = {attendeesID}
+               updateEventAttendance ={updateEventAttendance}
+               showAttendees = {showAttendees}
+               toggleEventAttendees = { toggleEventAttendees}
+               
               );
             })}
-          </ul>
+           </ul>
+           </>
         </div>
       </main>
       <>
